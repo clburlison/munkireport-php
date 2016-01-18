@@ -3,18 +3,17 @@ Location module
 
 Provides location information on where the Mac is physical located.
 
-The script uses Apple's CoreLocation framework determine the approximate latitude, longitude and address of the Mac.
+The script uses Apple's CoreLocation framework determine the approximate latitude, and longitude of the Mac.
 
-Author: Clayton Burlison <https://clburlison.com>
-Created: Jan. 17, 2016
+Author: Clayton Burlison <https://clburlison.com>  
+Created: Jan. 17, 2016  
 
-Based off of works by:
-@arubdesu - https://gist.github.com/arubdesu/b72585771a9f606ad800
-@pudquick - https://gist.github.com/pudquick/c7dd1262bd81a32663f0
-            https://gist.github.com/pudquick/329142c1740500bd3797
-@lindes   - https://github.com/lindes/get-location/
-University of Utah, Marriott Library -
-            https://github.com/univ-of-utah-marriott-library-apple/privacy_services_manager
+Based off of works by:  
+@arubdesu - https://gist.github.com/arubdesu/b72585771a9f606ad800  
+@pudquick - https://gist.github.com/pudquick/c7dd1262bd81a32663f0  
+@pudquick - https://gist.github.com/pudquick/329142c1740500bd3797  
+@lindes   - https://github.com/lindes/get-location/  
+University of Utah, Marriott Library - https://github.com/univ-of-utah-marriott-library-apple/privacy_services_manager  
 
 
 Limitations

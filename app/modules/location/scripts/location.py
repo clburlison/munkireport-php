@@ -26,6 +26,12 @@ except ImportError as error:
     print "Could not find FoundationPlist, are munkitools installed?"
     raise error
 
+# Skip manual check
+if len(sys.argv) > 1:
+    if sys.argv[1] == 'manualcheck':
+        print 'Manual check: skipping'
+        exit(0)
+
 # Create cache dir if it does not exist
 cachedir = '%s/cache' % os.path.dirname(os.path.realpath(__file__))
 if not os.path.exists(cachedir):
