@@ -6,10 +6,15 @@ class Location_model extends Model {
 		parent::__construct('id', 'location'); //primary key, tablename
 		$this->rs['id'] = '';
 		$this->rs['serial_number'] = $serial; $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
-		$this->rs['latitude'] = '';
-		$this->rs['longitude'] = '';
-		$this->rs['accuracy'] = '';
-		$this->rs['address'] = '';	   
+		$this->rs['Altitude'] = '';
+		$this->rs['CurrentStatus'] = '';
+		$this->rs['GoogleMap'] = '';
+		$this->rs['LS_Enabled'] = '';
+		$this->rs['LastRun'] = '';
+		$this->rs['Latitude'] = '';
+		$this->rs['LatitudeAccuracy'] = '';
+		$this->rs['Longitude'] = '';
+		$this->rs['LongitudeAccuracy'] = '';
 
 		// Schema version, increment when creating a db migration
 		$this->schema_version = 0;
@@ -36,10 +41,15 @@ class Location_model extends Model {
 	{		
 		// Translate location strings to db fields
         $translate = array(
-        	'latitude = ' => 'latitude',
-        	'longitude = ' => 'longitude',
-        	'accuracy = ' => 'accuracy',
-        	'address = ' => 'address');
+		$this->rs['Altitude'] = '';
+		$this->rs['CurrentStatus'] = '';
+		$this->rs['GoogleMap'] = '';
+		$this->rs['LS_Enabled'] = '';
+		$this->rs['LastRun'] = '';
+		$this->rs['Latitude'] = '';
+		$this->rs['LatitudeAccuracy'] = '';
+		$this->rs['Longitude'] = '';
+		$this->rs['LongitudeAccuracy'] = '';
 
 //clear any previous data we had
 		foreach($translate as $search => $field) {

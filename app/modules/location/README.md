@@ -3,20 +3,37 @@ Location module
 
 Provides location information on where the Mac is physical located.
 
-The script uses wifi and the Google map api to determine the approximate latitude, longitude and address of the Mac.
+The script uses Apple's CoreLocation framework determine the approximate latitude, longitude and address of the Mac.
 
-Credit for script goes to bollman https://jamfnation.jamfsoftware.com/discussion.html?id=12300
+Author: Clayton Burlison <https://clburlison.com>
+Created: Jan. 17, 2016
+
+Based off of works by:
+@arubdesu - https://gist.github.com/arubdesu/b72585771a9f606ad800
+@pudquick - https://gist.github.com/pudquick/c7dd1262bd81a32663f0
+            https://gist.github.com/pudquick/329142c1740500bd3797
+@lindes   - https://github.com/lindes/get-location/
+University of Utah, Marriott Library -
+            https://github.com/univ-of-utah-marriott-library-apple/privacy_services_manager
 
 
 Limitations
 ==============
 
-Good question. There maybe a limit of 2,500 requests per 24 hour period and 5 requests per second but I'm not sure.
+Currently this module is limited to 10.8 - 10.11. On each run Location Services will be enabled, and the system Python binary will be given access to Location Services.
 
 
 Notes
 ==============
 
-The Google api also reports back how accurate the location is. 
-The accuracy of the estimated location is in meters. This represents the radius of a circle around the given location.
-https://developers.google.com/maps/documentation/business/geolocation/
+The following data is created by this script:
+
+* Latitude - Str, Latitude
+* Longitude - Str, Longitude
+* LatitudeAccuracy - Int, Latitude Accuracy
+* LongitudeAccuracy - Int, Longitude Accuracy
+* Altitude - Int, Altitude
+* GoogleMap - Str, Pre-populated Google Maps URL
+* LastRun - Str, Last run time stored in UTC time
+* CurrentStatus - Str, Friendly message describing last run
+* LS_Enabled - Bool, are Location Services enabled.

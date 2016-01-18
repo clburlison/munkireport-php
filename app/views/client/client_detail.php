@@ -20,7 +20,8 @@ $tab_list = array(
 	'filevault-tab' => array('view' => 'client/filevault_tab', 'i18n' => 'client.tab.fv_escrow'),
 	'power-tab' => array('view' => 'client/power_tab', 'i18n' => 'client.tab.power'),
 	'printer-tab' => array('view' => 'client/printer_tab', 'i18n' => 'client.tab.printers', 'badge' => 'printer-cnt'),
-	'profile-tab' => array('view' => 'client/profile_tab', 'i18n' => 'client.tab.profiles')
+	'profile-tab' => array('view' => 'client/profile_tab', 'i18n' => 'client.tab.profiles'),
+	'map' => array('view' => 'client/map_tab', 'i18n' => 'client.tab.map')
 		);
 
 // Add custom tabs
