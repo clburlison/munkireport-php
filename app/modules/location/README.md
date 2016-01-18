@@ -1,9 +1,9 @@
 Location module
 ==============
 
-Provides location information on where the Mac is physical located.
+Provides location information on where a Mac is physical located.
 
-The script uses Apple's CoreLocation framework determine the approximate latitude, and longitude of the Mac.
+The script uses Apple's CoreLocation framework to determine the approximate latitude, and longitude of a Mac.
 
 Author: Clayton Burlison <https://clburlison.com>  
 Created: Jan. 17, 2016  

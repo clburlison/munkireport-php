@@ -4,7 +4,7 @@
 CTL="${BASEURL}index.php?/module/location/"
 
 # Get the scripts in the proper directories
-${CURL} "${CTL}get_script/location.sh" -o "${MUNKIPATH}preflight.d/location.py"
+${CURL} "${CTL}get_script/location.py" -o "${MUNKIPATH}preflight.d/location.py"
 
 # Check exit status of curl
 if [ $? = 0 ]; then

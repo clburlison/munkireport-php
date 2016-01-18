@@ -69,7 +69,7 @@ def os_vers():
     return maj_os_vers
 
 def os_check():
-    """Only tested on 10.8 - 10.11. 10.7 should be do-able."""
+    """Only tested on 10.8 - 10.11."""
     if not (8 <= int(os_vers()) <= 11):
         global plist; plist = dict(
             CurrentStatus = "Your OS is not supported at this time: %s." % platform.mac_ver()[0],
