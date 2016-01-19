@@ -106,6 +106,18 @@ def sysprefs_boxchk():
         service_handler('load')
         time.sleep(2)
 
+def cdhash(domain):
+    """With 10.11 Apple is now requiring code signatures on certain binaries. We are 
+    cheating and letting the OS create the string for us. Then reapplying the settings
+    to enable the Python binary."""
+    das_plist = '/private/var/db/locationd/clients.plist'
+    try:
+        clients_dict = FoundationPlist.readPlist(das_plist)
+        val = clients_dict.get(domain, None)
+        return val["Requirement"]
+    except:
+        return ""
+
 def add_python():
     """Python dict for clients.plist in locationd settings."""
     auth_plist = {}
@@ -118,7 +130,7 @@ def add_python():
     if current_os == 11:
         domain = "com.apple.locationd.executable-%s" % binary_path
         auth_plist["BundleId"] = "com.apple.locationd.executable-%s" % binary_path
-        auth_plist["Requirement"] = val["Requirement"]
+        auth_plist["Requirement"] = cdhash(domain)
         auth_plist["Registered"] = binary_path
     if current_os == 10:
         auth_plist["BundleId"] = domain

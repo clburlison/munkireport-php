@@ -19,7 +19,7 @@ University of Utah, Marriott Library - https://github.com/univ-of-utah-marriott-
 Limitations
 ==============
 
-Currently this module is limited to 10.8 - 10.11. On each run Location Services will be enabled, and the system Python binary will be given access to Location Services. Due to how Location Services and the CoreLocation framework interact it takes two runs of this script before location data starts to consistently output.
+Currently this module is limited to 10.8 - 10.11. On each run Location Services will be enabled, and the system Python binary will be given access to Location Services. Due to how Location Services and the CoreLocation framework interact may take as many as six runs of this script before location data starts to consistently output results. We could resolve this in script with additional CoreLocation queues however since this is designed to be ran non-interactive the trade of additional time isn't worth it.
 
 
 Notes
