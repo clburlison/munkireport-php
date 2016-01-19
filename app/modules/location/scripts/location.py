@@ -17,7 +17,7 @@ University of Utah, Marriott Library -
 
 from CoreLocation import CLLocationManager, kCLDistanceFilterNone, kCLLocationAccuracyThreeKilometers
 from Foundation import NSRunLoop, NSDate, NSObject
-import sys, os, plistlib, platform, subprocess, objc
+import sys, os, plistlib, platform, subprocess, objc, time
 from Foundation import NSBundle
 try:
     sys.path.append('/usr/local/munki/munkilib/')
@@ -86,10 +86,17 @@ def service_handler(action):
 def sysprefs_boxchk():
     """Enables location services in sysprefs globally."""
     uuid = get_hardware_uuid()
-    # If dir doesn't exist create it here
+    perfdir = "/private/var/db/locationd/Library/Preferences/ByHost/"
+    if not os.path.exists(perfdir):
+        os.makedirs(perfdir)
     path_stub = "/private/var/db/locationd/Library/Preferences/ByHost/com.apple.locationd."
     das_plist = path_stub + uuid.strip() + ".plist"
-    on_disk = FoundationPlist.readPlist(das_plist)
+    try:
+        on_disk = FoundationPlist.readPlist(das_plist)
+    except:
+        p = {}
+        FoundationPlist.writePlist(p, das_plist)
+        on_disk = FoundationPlist.readPlist(das_plist)
     val = on_disk.get('LocationServicesEnabled', None)
     if val != 1:
         service_handler('unload')
@@ -97,31 +104,39 @@ def sysprefs_boxchk():
         FoundationPlist.writePlist(on_disk, das_plist)
         os.chown(das_plist, 205, 205)
         service_handler('load')
+        time.sleep(2)
 
 def add_python():
     """Python dict for clients.plist in locationd settings."""
     auth_plist = {}
     current_os = int(os_vers())
+    domain = "org.python.python"
+    python_path = "/System/Library/Frameworks/Python.framework/Versions/2.7/Resources/Python.app"
+    binary_path = "/System/Library/Frameworks/Python.framework/Versions/2.7/Resources/Python.app/Contents/MacOS/Python"
+    requ_legacy = 'identifier "org.python.python" and anchor apple'
+    
     if current_os == 11:
-        domain = "com.apple.locationd.executable-/System/Library/Frameworks/Python.framework/Versions/2.7/Resources/Python.app/Contents/MacOS/Python"
-        auth_plist["BundleId"] = "com.apple.locationd.executable-/System/Library/Frameworks/Python.framework/Versions/2.7/Resources/Python.app/Contents/MacOS/Python"
-        auth_plist["Requirement"] = 'cdhash H"13780f41392c7e8f4c8f66891aa4de81b9706653" or cdhash H"4a48b0cc32594f23bbaed9302479a1266f8f6eab"'
-    else:
-        domain = "org.python.python"
-        auth_plist["BundleId"] = "org.python.python"
-        auth_plist["BundlePath"] = "/System/Library/Frameworks/Python.framework/Versions/2.7/Resources/Python.app"
-        auth_plist["Requirement"] = 'identifier "org.python.python" and anchor apple'
-    
-    if current_os <= 8:
-        auth_plist["RequirementString"] = 'identifier "org.python.python" and anchor apple'
-    
-    if current_os > 9:
-        auth_plist["Registered"] = "/System/Library/Frameworks/Python.framework/Versions/2.7/Resources/Python.app/Contents/MacOS/Python"
-    else:
+        domain = "com.apple.locationd.executable-%s" % binary_path
+        auth_plist["BundleId"] = "com.apple.locationd.executable-%s" % binary_path
+        auth_plist["Requirement"] = val["Requirement"]
+        auth_plist["Registered"] = binary_path
+    if current_os == 10:
+        auth_plist["BundleId"] = domain
+        auth_plist["BundlePath"] = python_path
+        auth_plist["Requirement"] = requ_legacy
+        auth_plist["Registered"] = binary_path
+    if current_os == 9:
+        auth_plist["BundleId"] = domain
+        auth_plist["BundlePath"] = python_path
+        auth_plist["Requirement"] = requ_legacy
         auth_plist["Registered"] = ""
-
+    if current_os == 8:
+        auth_plist["BundleId"] = domain
+        auth_plist["Registered"] = ""
+        auth_plist["RequirementString"] = requ_legacy
+    
     auth_plist["Authorized"] = True
-    auth_plist["Executable"] = "/System/Library/Frameworks/Python.framework/Versions/2.7/Resources/Python.app/Contents/MacOS/Python"
+    auth_plist["Executable"] = binary_path
     auth_plist["Hide"] = 0
     auth_plist["Whitelisted"] = False
     das_plist = '/private/var/db/locationd/clients.plist'
@@ -133,13 +148,14 @@ def add_python():
             need_to_run = True
     except(TypeError): 
         need_to_run = True
-
+    
     if need_to_run == True:
         service_handler('unload')
         clients_dict[domain] = auth_plist
         FoundationPlist.writePlist(clients_dict, das_plist)
         os.chown(das_plist, 205, 205)
         service_handler('load')
+        time.sleep(2)
 
 # Access CoreLocation framework to locate Mac
 is_enabled = CLLocationManager.locationServicesEnabled()
@@ -204,8 +220,7 @@ def main():
     
     finder = MyLocationManagerDelegate.alloc().init()
     for x in range(2):
-         NSRunLoop.currentRunLoop(
-             ).runUntilDate_(NSDate.dateWithTimeIntervalSinceNow_(1))
+        NSRunLoop.currentRunLoop().runUntilDate_(NSDate.dateWithTimeIntervalSinceNow_(1))
     plistlib.writePlist(plist, location)
 
 if __name__ == '__main__':
