@@ -59,9 +59,9 @@ class Location_model extends Model {
 		// Parse data
 		foreach($translate as $search => $field) {
 			    
-			if (isset($plist[$item]))
+			if (isset($plist[$search]))
 			{
-				$this->$field = $plist[$item];
+				$this->$field = $plist[$search];
 			}
 			else
 			{
