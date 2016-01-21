@@ -61,11 +61,11 @@ class Location_model extends Model {
 			    
 			if (isset($plist[$item]))
 			{
-				$this->$item = $plist[$item];
+				$this->$field = $plist[$item];
 			}
 			else
 			{
-				$this->$item = '';
+				$this->$field = '';
 			}
 		
 		} 
