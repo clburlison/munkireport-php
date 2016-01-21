@@ -6,15 +6,14 @@ class Location_model extends Model {
 		parent::__construct('id', 'location'); //primary key, tablename
 		$this->rs['id'] = '';
 		$this->rs['serial_number'] = $serial; $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
-		$this->rs['altitude'] = '';
+		$this->rs['altitude'] = 0;
 		$this->rs['currentstatus'] = '';
-		$this->rs['googlemap'] = '';
-		$this->rs['ls_enabled'] = '';
+		$this->rs['ls_enabled'] = 0;
 		$this->rs['lastrun'] = '';
 		$this->rs['latitude'] = '';
-		$this->rs['latitudeaccuracy'] = '';
+		$this->rs['latitudeaccuracy'] = 0;
 		$this->rs['longitude'] = '';
-		$this->rs['longitudeaccuracy'] = '';
+		$this->rs['longitudeaccuracy'] = 0;
 
 		// Schema version, increment when creating a db migration
 		$this->schema_version = 0;
@@ -39,37 +38,38 @@ class Location_model extends Model {
 	 **/
 	function process($data)
 	{		
-		// Translate location strings to db fields
-    $translate = array(
-        	'Altitude: ' => 'altitude',
-        	'CurrentStatus: ' => 'currentstatus',
-        	'GoogleMap: ' => 'googlemap',
-        	'LS_Enabled: ' => 'ls_enabled',
-        	'LastRun: ' => 'lastrun',
-        	'Latitude: ' => 'latitude',
-        	'LatitudeAccuracy: ' => 'latitudeaccuracy',
-        	'Longitude: ' => 'longitude',
-        	'LongitudeAccuracy: ' => 'longitudeaccuracy');
+		require_once(APP_PATH . 'lib/CFPropertyList/CFPropertyList.php');
+		$parser = new CFPropertyList();
+		$parser->parse($data);
+		
+		$plist = $parser->toArray();
 
-//clear any previous data we had
-		foreach($translate as $search => $field) {
-			$this->$field = '';
-		}
+		// Translate location strings to db fields
+    		$translate = array(
+        		'Altitude: ' => 'altitude',
+        		'CurrentStatus: ' => 'currentstatus',
+        		'GoogleMap: ' => 'googlemap',
+        		'LS_Enabled: ' => 'ls_enabled',
+        		'LastRun: ' => 'lastrun',
+        		'Latitude: ' => 'latitude',
+        		'LatitudeAccuracy: ' => 'latitudeaccuracy',
+        		'Longitude: ' => 'longitude',
+        		'LongitudeAccuracy: ' => 'longitudeaccuracy');
+
 		// Parse data
-		foreach(explode("\n", $data) as $line) {
-		    // Translate standard entries
-			foreach($translate as $search => $field) {
+		foreach($translate as $search => $field) {
 			    
-			    if(strpos($line, $search) === 0) {
-				    
-				    $value = substr($line, strlen($search));
-				    
-				    $this->$field = $value;
-				    break;
-			    }
-			} 
+			if (isset($plist[$item]))
+			{
+				$this->$item = $plist[$item];
+			}
+			else
+			{
+				$this->$item = '';
+			}
+		
+		} 
 		    
-		} //end foreach explode lines
 		$this->save();
 	}
 }
