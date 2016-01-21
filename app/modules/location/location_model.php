@@ -41,15 +41,15 @@ class Location_model extends Model {
 	{		
 		// Translate location strings to db fields
     $translate = array(
-		$this->rs['altitude'] = '';
-		$this->rs['currentstatus'] = '';
-		$this->rs['googlemap'] = '';
-		$this->rs['ls_enabled'] = '';
-		$this->rs['lastrun'] = '';
-		$this->rs['latitude'] = '';
-		$this->rs['latitudeaccuracy'] = '';
-		$this->rs['longitude'] = '';
-		$this->rs['longitudeaccuracy'] = '';
+        	'Altitude: ' => 'altitude',
+        	'CurrentStatus: ' => 'currentstatus',
+        	'GoogleMap: ' => 'googlemap',
+        	'LS_Enabled: ' => 'ls_enabled',
+        	'LastRun: ' => 'lastrun',
+        	'Latitude: ' => 'latitude',
+        	'LatitudeAccuracy: ' => 'latitudeaccuracy',
+        	'Longitude: ' => 'longitude',
+        	'LongitudeAccuracy: ' => 'longitudeaccuracy');
 
 //clear any previous data we had
 		foreach($translate as $search => $field) {
