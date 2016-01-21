@@ -10,9 +10,9 @@ class Location_model extends Model {
 		$this->rs['currentstatus'] = '';
 		$this->rs['ls_enabled'] = 0;
 		$this->rs['lastrun'] = '';
-		$this->rs['latitude'] = '';
+		$this->rs['latitude'] = 0.0;
 		$this->rs['latitudeaccuracy'] = 0;
-		$this->rs['longitude'] = '';
+		$this->rs['longitude'] = 0.0;
 		$this->rs['longitudeaccuracy'] = 0;
 
 		// Schema version, increment when creating a db migration
@@ -43,18 +43,18 @@ class Location_model extends Model {
 		$parser->parse($data);
 		
 		$plist = $parser->toArray();
-
+		
 		// Translate location strings to db fields
-    		$translate = array(
-        		'Altitude: ' => 'altitude',
-        		'CurrentStatus: ' => 'currentstatus',
-        		'GoogleMap: ' => 'googlemap',
-        		'LS_Enabled: ' => 'ls_enabled',
-        		'LastRun: ' => 'lastrun',
-        		'Latitude: ' => 'latitude',
-        		'LatitudeAccuracy: ' => 'latitudeaccuracy',
-        		'Longitude: ' => 'longitude',
-        		'LongitudeAccuracy: ' => 'longitudeaccuracy');
+		$translate = array(
+			'Altitude' => 'altitude',
+			'CurrentStatus' => 'currentstatus',
+			'GoogleMap' => 'googlemap',
+			'LS_Enabled' => 'ls_enabled',
+			'LastRun' => 'lastrun',
+			'Latitude' => 'latitude',
+			'LatitudeAccuracy' => 'latitudeaccuracy',
+			'Longitude' => 'longitude',
+			'LongitudeAccuracy' => 'longitudeaccuracy');
 
 		// Parse data
 		foreach($translate as $search => $field) {
@@ -67,9 +67,8 @@ class Location_model extends Model {
 			{
 				$this->$field = '';
 			}
-		
-		} 
-		    
+		}
+				    
 		$this->save();
 	}
 }
