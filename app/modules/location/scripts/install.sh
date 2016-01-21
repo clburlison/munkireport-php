@@ -4,7 +4,7 @@
 CTL="${BASEURL}index.php?/module/location/"
 
 # Get the scripts in the proper directories
-${CURL} "${CTL}get_script/location.py" -o "${MUNKIPATH}preflight.d/location.py"
+"${CURL[@]}" "${CTL}get_script/location.py" -o "${MUNKIPATH}preflight.d/location.py"
 
 # Check exit status of curl
 if [ $? = 0 ]; then
@@ -12,7 +12,7 @@ if [ $? = 0 ]; then
 	chmod a+x "${MUNKIPATH}preflight.d/location.py"
 
 	# Set preference to include this file in the preflight check
-	defaults write "${PREFPATH}" ReportItems -dict-add location "${MUNKIPATH}preflight.d/cache/location.plist"
+	setreportpref "location" "${CACHEPATH}location.plist"
 
 else
 	echo "Failed to download all required components!"
