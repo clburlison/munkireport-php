@@ -107,6 +107,7 @@
 			"ds": "Directory Services",
 			"fv_escrow": "Filevault Escrow",
 			"inventory_items": "Inventory Items",
+			"location": "Location",
 			"munki": "Managed Software",
 			"network": "Network Interfaces",
 			"power": "Power",
@@ -232,6 +233,16 @@
 		"hardware": {
 			"description": "Description"
 		},
+	"location": {
+		"altitude": "Altitude",
+		"currentstatus": "Current Status",
+		"ls_enabled": "Location Services Enabled",
+		"lastrun": "Last Run",
+		"latitude": "Latitude",
+		"latitudeaccuracy": "Latitude Accuracy",
+		"longitude": "Longitude",
+		"longitudeaccuracy": "Longitude Accuracy"
+		},	
 		"loading": "Loading data from server",
 		"munki": {
 			"latest_run": "Latest Run",
