@@ -9,7 +9,10 @@ $location = new location_model($serial_number);
 		<td>Address: <?=$location->address?></td>
 	</tr>
 	<tr>
-		<td>Approximate location within <?=$location->accuracy?> meters</td>
+		<td>location: <?=$location->latitude?>  <?=$location->longitude?></td>
+	</tr>
+	<tr>
+		<td>Approximate location within <?=$location->latitudeaccuracy?> meters latitude and <?=$location->longitudeaccuracy?> meters longitude</td>
 	</tr>
 	</table>
 
